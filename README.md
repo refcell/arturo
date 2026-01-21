@@ -2,6 +2,12 @@
 
 Minimal sequencer consensus built on commonware primitives.
 
+## Installation
+
+```toml
+arturo = "0.1"
+```
+
 ## Why
 
 Optimism's `op-conductor` provides high-availability sequencer consensus using Raft. It works, but Raft carries complexity that isn't always necessary for the core problem: ordering and replicating payloads across a small cluster with a single leader.
