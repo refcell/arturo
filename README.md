@@ -2,6 +2,10 @@
 
 Minimal sequencer consensus built on commonware primitives.
 
+> [!IMPORTANT]
+>
+> This was hacked up in one night and is not production software. Use at your own risk.
+
 ## Installation
 
 ```toml
