@@ -26,7 +26,7 @@ This project takes the same approach to sequencer consensus. Where `op-conductor
 
 Define your payload type by implementing the `Payload` trait. This requires a `digest()` method returning something that implements commonware's `Digest`, and a `height()` method for ordering.
 
-```rust
+```rust,ignore
 use arturo::Payload;
 
 struct MyPayload {
@@ -44,7 +44,7 @@ impl Payload for MyPayload {
 
 Provide an `EpochManager` implementation that controls leader election. This can be as simple as a static configuration or as complex as an external coordination service.
 
-```rust
+```rust,ignore
 use arturo::{EpochManager, Epoch, EpochChange};
 
 struct StaticEpochManager { /* ... */ }
@@ -60,7 +60,7 @@ impl EpochManager for StaticEpochManager {
 
 Wire everything together with `Conductor`, which is generic over your payload type, epoch manager, and cryptographic scheme.
 
-```rust
+```rust,ignore
 use arturo::Conductor;
 use commonware_cryptography::ed25519::Scheme as Ed25519;
 

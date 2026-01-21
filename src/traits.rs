@@ -9,6 +9,7 @@
 use std::{future::Future, pin::Pin};
 
 use commonware_cryptography::Digest;
+use thiserror::Error;
 
 use crate::types::{Epoch, EpochChange, Height, TransferError};
 
@@ -178,7 +179,7 @@ pub trait PayloadStore<P: Payload>: Clone + Send + Sync + 'static {
 }
 
 /// Errors that can occur during storage operations.
-#[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]
+#[derive(Debug, Clone, PartialEq, Eq, Error)]
 pub enum StoreError {
     /// The payload already exists.
     #[error("payload already exists")]
@@ -197,6 +198,7 @@ mod tests {
     };
 
     use commonware_cryptography::sha256;
+    use rstest::rstest;
 
     use super::*;
 
@@ -240,19 +242,29 @@ mod tests {
     }
 
     #[test]
-    fn test_payload_digest_determinism() {
+    fn payload_digest_determinism() {
         let payload = TestPayload { data: vec![1, 2, 3, 4], height: 1 };
         let d1 = payload.digest();
         let d2 = payload.digest();
         assert_eq!(d1, d2);
     }
 
-    #[test]
-    fn test_payload_encode_decode() {
-        let payload = TestPayload { data: vec![1, 2, 3, 4], height: 42 };
+    #[rstest]
+    #[case::simple(vec![1, 2, 3, 4], 42)]
+    #[case::empty_data(vec![], 0)]
+    #[case::large_height(vec![255], u64::MAX)]
+    fn payload_encode_decode(#[case] data: Vec<u8>, #[case] height: Height) {
+        let payload = TestPayload { data, height };
         let encoded = payload.encode();
         let decoded = TestPayload::decode(&encoded).unwrap();
         assert_eq!(payload, decoded);
+    }
+
+    #[rstest]
+    #[case::already_exists(StoreError::AlreadyExists, "payload already exists")]
+    #[case::backend(StoreError::Backend("db error".to_string()), "storage error: db error")]
+    fn store_error_display(#[case] error: StoreError, #[case] expected: &str) {
+        assert_eq!(format!("{error}"), expected);
     }
 
     // Test a simple in-memory store
@@ -291,7 +303,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_in_memory_store() {
+    async fn in_memory_store() {
         let store = InMemoryStore::<TestPayload>::new();
 
         let payload = TestPayload { data: vec![1, 2, 3], height: 1 };
