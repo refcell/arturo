@@ -13,9 +13,9 @@ categories = ["network-programming", "cryptography"]
 
 [dependencies]
 # Commonware crates
-commonware-consensus = { git = "https://github.com/commonwarexyz/monorepo" }
-commonware-cryptography = { git = "https://github.com/commonwarexyz/monorepo" }
-commonware-utils = { git = "https://github.com/commonwarexyz/monorepo" }
+commonware-consensus = "0.0.65"
+commonware-cryptography = "0.0.65"
+commonware-utils = "0.0.65"
 
 # Async runtime
 futures = "0.3"

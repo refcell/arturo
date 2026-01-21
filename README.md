@@ -76,6 +76,16 @@ if conductor.leader() {
 let latest = conductor.latest().await;
 ```
 
+## Examples
+
+See [`examples/`](examples/) for runnable code:
+
+- **basic** — minimal conductor setup with ed25519
+- **custom_payload** — implementing a custom payload type
+- **static_sequencer** — static validator set configuration
+
+Run with `cargo run --example <name>`.
+
 ## License
 
 Licensed under either of Apache License, Version 2.0 or MIT license at your option.
