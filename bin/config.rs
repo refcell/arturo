@@ -1,4 +1,4 @@
-//! Configuration for the op-conductor binary.
+//! Configuration for the conductor binary.
 //!
 //! Supports loading configuration from TOML files, environment variables,
 //! or CLI arguments.
@@ -8,37 +8,37 @@ use std::{net::SocketAddr, path::Path};
 use clap::Parser;
 use serde::{Deserialize, Serialize};
 
-/// CLI arguments for op-conductor.
+/// CLI arguments for conductor.
 #[derive(Debug, Parser)]
-#[command(name = "op-conductor")]
-#[command(about = "Minimal OP Stack conductor using arturo")]
+#[command(name = "conductor")]
+#[command(about = "Minimal conductor using arturo")]
 pub struct Cli {
     /// Path to the configuration file.
-    #[arg(short, long, env = "OP_CONDUCTOR_CONFIG")]
+    #[arg(short, long, env = "CONDUCTOR_CONFIG")]
     pub config: Option<String>,
 
     /// Address to bind the HTTP server to.
-    #[arg(long, env = "OP_CONDUCTOR_BIND_ADDR", default_value = "127.0.0.1:8080")]
+    #[arg(long, env = "CONDUCTOR_BIND_ADDR", default_value = "127.0.0.1:8080")]
     pub bind_addr: SocketAddr,
 
     /// This node's identity seed (used for key derivation).
-    #[arg(long, env = "OP_CONDUCTOR_IDENTITY")]
+    #[arg(long, env = "CONDUCTOR_IDENTITY")]
     pub identity: Option<u64>,
 
     /// Comma-separated list of peer URLs.
-    #[arg(long, env = "OP_CONDUCTOR_PEERS", value_delimiter = ',')]
+    #[arg(long, env = "CONDUCTOR_PEERS", value_delimiter = ',')]
     pub peers: Vec<String>,
 
     /// Health check interval in milliseconds.
-    #[arg(long, env = "OP_CONDUCTOR_HEALTH_INTERVAL_MS", default_value = "1000")]
+    #[arg(long, env = "CONDUCTOR_HEALTH_INTERVAL_MS", default_value = "1000")]
     pub health_interval_ms: u64,
 
     /// Quorum threshold for certification.
-    #[arg(long, env = "OP_CONDUCTOR_QUORUM_THRESHOLD", default_value = "1")]
+    #[arg(long, env = "CONDUCTOR_QUORUM_THRESHOLD", default_value = "1")]
     pub quorum_threshold: usize,
 }
 
-/// Configuration for the op-conductor.
+/// Configuration for the conductor.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
     /// Address to bind the HTTP server to.

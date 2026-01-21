@@ -1,5 +1,5 @@
 # Arturo Justfile
-# Minimal op-conductor rewrite using commonware ordered_broadcast
+# Minimal conductor using commonware ordered_broadcast
 
 # Aliases
 alias t := test
@@ -86,6 +86,18 @@ watch-check:
 # Run benchmarks (placeholder)
 bench:
     @echo "No benchmarks configured yet"
+
+# Run the demo TUI
+demo:
+    cargo run --features demo --bin demo
+
+# Run demo with verbose logging
+demo-verbose:
+    RUST_LOG=debug cargo run --features demo --bin demo
+
+# Build the demo
+build-demo:
+    cargo build --features demo --bin demo
 
 # Show help
 help:

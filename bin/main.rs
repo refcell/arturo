@@ -1,7 +1,7 @@
-//! Minimal op-conductor binary using the arturo library.
+//! Minimal conductor binary using the arturo library.
 #![allow(unreachable_pub, dead_code, clippy::missing_const_for_fn, clippy::option_if_let_else)]
 //!
-//! This binary implements a minimal OP Stack conductor with:
+//! This binary implements a minimal sequencer consensus conductor with:
 //! - HTTP health-based leader election
 //! - JSON-RPC interface for payload submission and retrieval
 //! - Pluggable epoch management
@@ -10,13 +10,13 @@
 //!
 //! ```bash
 //! # Start with default settings
-//! op-conductor --identity 1
+//! conductor --identity 1
 //!
 //! # Start with peers
-//! op-conductor --identity 1 --peers http://peer1:8080,http://peer2:8080
+//! conductor --identity 1 --peers http://peer1:8080,http://peer2:8080
 //!
 //! # Start with config file
-//! op-conductor --config config.toml
+//! conductor --config config.toml
 //! ```
 
 mod config;

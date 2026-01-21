@@ -1,7 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![doc(issue_tracker_base_url = "https://github.com/refcell/arturo/issues/")]
 #![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]
-#![cfg_attr(not(any(test, feature = "bin")), warn(unused_crate_dependencies))]
+#![cfg_attr(not(any(test, feature = "bin", feature = "demo")), warn(unused_crate_dependencies))]
 
 // Binary-only dependencies (used by bin/main.rs, not lib)
 // Re-export commonly used commonware types

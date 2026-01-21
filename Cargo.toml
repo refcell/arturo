@@ -5,20 +5,26 @@ edition = "2021"
 rust-version = "1.85"
 authors = ["Andreas Bigger <andreas@nascent.xyz>"]
 license = "MIT"
-description = "Minimal op-conductor rewrite using commonware ordered_broadcast"
+description = "Minimal sequencer consensus using commonware ordered_broadcast"
 homepage = "https://github.com/refcell/arturo"
 repository = "https://github.com/refcell/arturo"
 keywords = ["consensus", "sequencer", "ordered-broadcast"]
 categories = ["network-programming", "cryptography"]
 
 [[bin]]
-name = "op-conductor"
+name = "conductor"
 path = "bin/main.rs"
 required-features = ["bin"]
+
+[[bin]]
+name = "demo"
+path = "demo/src/main.rs"
+required-features = ["demo"]
 
 [features]
 default = []
 bin = []
+demo = ["ratatui", "crossterm"]
 
 [dependencies]
 # Commonware crates
@@ -53,6 +59,10 @@ alloy-rpc-types-engine = "1"
 
 # Encoding
 hex = "0.4"
+
+# TUI dependencies (demo feature)
+ratatui = { version = "0.29", optional = true }
+crossterm = { version = "0.28", optional = true, features = ["event-stream"] }
 
 [dev-dependencies]
 rand = "0.8"

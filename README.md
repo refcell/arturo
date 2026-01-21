@@ -10,17 +10,17 @@ arturo = "0.1"
 
 ## Why
 
-Optimism's `op-conductor` provides high-availability sequencer consensus using Raft. It works, but Raft carries complexity that isn't always necessary for the core problem: ordering and replicating payloads across a small cluster with a single leader.
+High-availability sequencer consensus systems often use Raft. It works, but Raft carries complexity that isn't always necessary for the core problem: ordering and replicating payloads across a small cluster with a single leader.
 
 arturo strips this down to the essentials. Instead of Raft's leader election and log replication, it uses commonware's `ordered_broadcast` which provides sequencer-driven broadcast with quorum-based certification. The result is a trait-abstracted library where payload types, epoch management, and cryptographic schemes are all pluggable rather than hardcoded.
 
-The core insight is that op-conductor's `CommitUnsafePayload` and `LatestUnsafePayload` map directly to ordered_broadcast's propose/certify model. A single sequencer per epoch proposes chunks, validators acknowledge them, and once a quorum is reached the payload is certified. Leadership transfer becomes an epoch transition with a new sequencer identity.
+The core insight is that sequencer consensus operations like `CommitPayload` and `LatestPayload` map directly to ordered_broadcast's propose/certify model. A single sequencer per epoch proposes chunks, validators acknowledge them, and once a quorum is reached the payload is certified. Leadership transfer becomes an epoch transition with a new sequencer identity.
 
 ### Why "arturo"
 
 The name honors [Arturo Toscanini](https://en.wikipedia.org/wiki/Arturo_Toscanini), the legendary conductor who revolutionized orchestral performance in the early 20th century. Toscanini was famous for rejecting the excessive ornamentation of the Romantic era in favor of fidelity to the score itself. Where his contemporaries added layers of personal interpretation, Toscanini stripped performances back to what the composer actually wrote, insisting that the music speak for itself.
 
-This project takes the same approach to sequencer consensus. Where `op-conductor` layers Raft on top of the core problem, arturo returns to fundamentals: ordered broadcast with quorum certification. The name felt right for a new kind of conductor built on the principle that less machinery means clearer execution.
+This project takes the same approach to sequencer consensus. Where traditional conductor implementations layer Raft on top of the core problem, arturo returns to fundamentals: ordered broadcast with quorum certification. The name felt right for a new kind of conductor built on the principle that less machinery means clearer execution.
 
 ## Usage
 

@@ -1,4 +1,4 @@
-//! Axum HTTP RPC handlers for the op-conductor.
+//! Axum HTTP RPC handlers for the conductor.
 //!
 //! Provides JSON-RPC style endpoints for interacting with the conductor:
 //! - `GET /health` - Health check

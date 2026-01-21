@@ -1,10 +1,10 @@
-# op-conductor
+# conductor
 
-Minimal OP Stack conductor binary using the arturo library.
+Minimal sequencer consensus binary using the arturo library.
 
 ## Overview
 
-This binary implements a minimal op-conductor with:
+This binary implements a minimal conductor with:
 - HTTP health-based leader election
 - JSON-RPC interface for payload submission and retrieval
 - Pluggable epoch management via the arturo `EpochManager` trait
@@ -13,7 +13,7 @@ This binary implements a minimal op-conductor with:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      op-conductor                            │
+│                        conductor                            │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
 │  ┌─────────────┐     ┌──────────────────────────────────┐   │
@@ -48,13 +48,13 @@ This binary implements a minimal op-conductor with:
 ### Start with default settings
 
 ```bash
-cargo run --bin op-conductor -- --identity 1
+cargo run --bin conductor -- --identity 1
 ```
 
 ### Start with peers
 
 ```bash
-cargo run --bin op-conductor -- \
+cargo run --bin conductor -- \
   --identity 1 \
   --peers http://peer1:8080,http://peer2:8080 \
   --bind-addr 0.0.0.0:8080
@@ -63,7 +63,7 @@ cargo run --bin op-conductor -- \
 ### Start with config file
 
 ```bash
-cargo run --bin op-conductor -- --config config.toml
+cargo run --bin conductor -- --config config.toml
 ```
 
 ### Example config.toml
@@ -80,12 +80,12 @@ quorum_threshold = 2
 
 | Option | Environment Variable | Default | Description |
 |--------|---------------------|---------|-------------|
-| `--config` | `OP_CONDUCTOR_CONFIG` | - | Path to TOML config file |
-| `--bind-addr` | `OP_CONDUCTOR_BIND_ADDR` | `127.0.0.1:8080` | HTTP server bind address |
-| `--identity` | `OP_CONDUCTOR_IDENTITY` | - | Node identity seed for key derivation |
-| `--peers` | `OP_CONDUCTOR_PEERS` | - | Comma-separated list of peer URLs |
-| `--health-interval-ms` | `OP_CONDUCTOR_HEALTH_INTERVAL_MS` | `1000` | Health check interval in ms |
-| `--quorum-threshold` | `OP_CONDUCTOR_QUORUM_THRESHOLD` | `1` | Required acks for certification |
+| `--config` | `CONDUCTOR_CONFIG` | - | Path to TOML config file |
+| `--bind-addr` | `CONDUCTOR_BIND_ADDR` | `127.0.0.1:8080` | HTTP server bind address |
+| `--identity` | `CONDUCTOR_IDENTITY` | - | Node identity seed for key derivation |
+| `--peers` | `CONDUCTOR_PEERS` | - | Comma-separated list of peer URLs |
+| `--health-interval-ms` | `CONDUCTOR_HEALTH_INTERVAL_MS` | `1000` | Health check interval in ms |
+| `--quorum-threshold` | `CONDUCTOR_QUORUM_THRESHOLD` | `1` | Required acks for certification |
 
 ## API Endpoints
 
@@ -178,7 +178,7 @@ Returns the certified payload at a specific height.
 
 Terminal 1 (Node 1 - will be leader):
 ```bash
-cargo run --bin op-conductor -- \
+cargo run --bin conductor -- \
   --identity 1 \
   --bind-addr 127.0.0.1:8081 \
   --peers http://127.0.0.1:8082
@@ -186,7 +186,7 @@ cargo run --bin op-conductor -- \
 
 Terminal 2 (Node 2):
 ```bash
-cargo run --bin op-conductor -- \
+cargo run --bin conductor -- \
   --identity 2 \
   --bind-addr 127.0.0.1:8082 \
   --peers http://127.0.0.1:8081
