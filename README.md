@@ -22,6 +22,10 @@ The name honors [Arturo Toscanini](https://en.wikipedia.org/wiki/Arturo_Toscanin
 
 This project takes the same approach to sequencer consensus. Where traditional conductor implementations layer Raft on top of the core problem, arturo returns to fundamentals: ordered broadcast with quorum certification. The name felt right for a new kind of conductor built on the principle that less machinery means clearer execution.
 
+## Demo
+
+<https://github.com/user-attachments/assets/ea5fd9d9-3266-4358-a8d3-0423e30f220f>
+
 ## Usage
 
 Define your payload type by implementing the `Payload` trait. This requires a `digest()` method returning something that implements commonware's `Digest`, and a `height()` method for ordering.
